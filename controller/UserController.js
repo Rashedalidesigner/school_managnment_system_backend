@@ -10,9 +10,8 @@ const createUser = async (req, res) => {
     } else {
         const data = await UserModel.create(newdata);
         const respon = await res.json({ message: "Create User", data: data });
-        // console.log(respon);
         console.log("User created successfully");
-        // console.log(respon.message, respon.data);
+
     }
 };
 

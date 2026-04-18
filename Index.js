@@ -12,6 +12,7 @@ import studentAttendenceRouter from "./router/studentattendenceRouter.js";
 import studentLeaveRouter from "./router/studentLeaveRouter.js";
 import teacherAttendenceRouter from "./router/teacherattendenceRouter.js";
 import teacherLeaveRouter from "./router/teacherLeaveRouter.js";
+import FeeRouter from "./router/FeeRouter.js";
 
 
 const app = express();
@@ -25,12 +26,12 @@ app.use("/api/users", userRouter);
 app.use("/api/teachers", teacherRouter);
 app.use("/api/assignments", assigmentRouter);
 app.use("/api/classes", classRouter);
-app.use("/api/assignmentMarks", assigmentMarkRouter);
+app.use("/api/assignmentmark", assigmentMarkRouter);
 app.use("/api/studentAttendence", studentAttendenceRouter);
 app.use("/api/studentLeave", studentLeaveRouter);
 app.use("/api/teacherattendence", teacherAttendenceRouter);
 app.use("/api/teacherLeave", teacherLeaveRouter);
-
+app.use("/api/fee", FeeRouter);
 
 // import ClassSchema from "./model/ClassSchama.js";
 
