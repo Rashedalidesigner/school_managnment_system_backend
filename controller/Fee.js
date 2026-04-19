@@ -15,21 +15,21 @@ const updateFee = async (req, res) => {
     const id = req.params.id;
     console.log(id);
     const updatedata = req.body;
-    const data = await FeeModel.updateOne({ StudentId: id }, updatedata);
+    const data = await FeeModel.updateOne({ studentId: id }, updatedata);
     res.json({ message: "Update Student fees", data: data });
 }
 
 const deleteFee = async (req, res) => {
     const id = req.params.id;
     console.log(id);
-    const data = await FeeModel.deleteOne({ StudentId: id });
+    const data = await FeeModel.deleteOne({ studentId: id });
     res.json({ message: "Delete Student fees", data: data });
 }
 
 const getFeeById = async (req, res) => {
     const id = req.params.id;
     console.log(id);
-    const data = await FeeModel.findOne({ StudentId: id });
+    const data = await FeeModel.findOne({ studentId: id });
     res.json({ message: "Get Single Student fees", data: data });
 }
 

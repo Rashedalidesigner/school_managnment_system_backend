@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const AssignmentSchema = new mongoose.Schema({
+
     AssignmentId: {
         type: String,
         required: true,

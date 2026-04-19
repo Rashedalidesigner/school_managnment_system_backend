@@ -7,7 +7,7 @@ const StudentAttendanceSchema = new mongoose.Schema({
         unique: true,
     },
     date: {
-        type: Date,
+        type: String,
         required: true,
     },
     status: {

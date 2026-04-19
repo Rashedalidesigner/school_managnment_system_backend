@@ -5,34 +5,44 @@ const TeacherSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-    }, firstName: {
+    },
+    firstName: {
         type: String,
         required: true,
-    }, lastName: {
+    },
+    lastName: {
         type: String,
         required: true,
-    }, email: {
+    },
+    email: {
         type: String,
         required: true,
-    }, phone: {
+    },
+    phone: {
         type: String,
         required: true,
-    }, subject: {
+    },
+    subject: {
         type: String,
         required: true
-    }, gender: {
+    },
+    gender: {
         type: String,
         required: true
-    }, address: {
+    },
+    address: {
         type: String,
         required: true
-    }, qualification: {
+    },
+    qualification: {
         type: String,
         required: true
-    }, experience: {
+    },
+    experience: {
         type: String,
         required: true
-    }, hireDate: {
+    },
+    hireDate: {
         type: String,
         required: true
     }

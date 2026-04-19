@@ -19,7 +19,6 @@ const app = express();
 const PORT = 5000;
 app.use(cors());
 app.use(bodyParser.json());
-connectDB();
 
 app.use("/api/students", Studentrouter);
 app.use("/api/users", userRouter);
@@ -40,8 +39,16 @@ app.use("/api/fee", FeeRouter);
 //     console.log("Dropped unique index on StudentId");
 //     // process.exit();
 // });
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+connectDB().then(async () => {
+    connectDB();
+    // console.log("Connected to MongoDB");
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}).catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1);
 });
+
+
 

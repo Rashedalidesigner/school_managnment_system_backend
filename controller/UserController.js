@@ -1,17 +1,25 @@
 
 import UserModel from "../model/User.js";
+import { getNextSequence } from "./counter.js";
 
 
 const createUser = async (req, res) => {
     const newdata = req.body;
     const userExit = await UserModel.findOne({ useremail: req.body.useremail });
+
     if (userExit) {
         return res.json({ message: "user already exits" });
     } else {
-        const data = await UserModel.create(newdata);
-        const respon = await res.json({ message: "Create User", data: data });
-        console.log("User created successfully");
-
+        try {
+            const seq = await getNextSequence("USER");
+            const userId = `U-${String(seq).padStart(3, "0")}`;
+            newdata.userId = userId;
+            const data = await UserModel.create(newdata);
+            res.json({ message: "Create User", data: data });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: error.message });
+        }
     }
 };
 

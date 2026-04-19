@@ -1,4 +1,5 @@
 import TeacherModel from "../model/TeacherSchma.js";
+import { getNextSequence } from "./counter.js";
 
 
 const getteacher = async (req, res) => {
@@ -7,9 +8,17 @@ const getteacher = async (req, res) => {
 }
 
 const createteacher = async (req, res) => {
-    const newdata = req.body;
-    const data = await TeacherModel.create(newdata);
-    res.json({ message: "Create Teacher", data: data });
+    try {
+        const newdata = req.body;
+        const seq = await getNextSequence("TEACHER");
+        const teacherId = `T-${String(seq).padStart(3, "0")}`;
+        newdata.TeacherId = teacherId;
+        const data = await TeacherModel.create(newdata);
+        res.json({ message: "Create Teacher", data: data });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
 }
 
 const updateteacher = async (req, res) => {

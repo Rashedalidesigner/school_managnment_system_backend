@@ -1,4 +1,6 @@
 import AssignmentModel from "../model/Assigment.js";
+import { getNextSequence } from "./counter.js";
+
 
 const getAssignment = async (req, res) => {
     const data = await AssignmentModel.find();
@@ -6,13 +8,18 @@ const getAssignment = async (req, res) => {
 }
 
 const createassignment = async (req, res) => {
-
-    const newdata = req.body;
-    // console.log(newdata);
-    const data = await AssignmentModel.create(newdata);
-    res.json({ message: "Create Assignment", data: data });
-
-}
+    try {
+        const newdata = req.body;
+        const seq = await getNextSequence("ASSIGNMENT");
+        const assignmentId = `A-${String(seq).padStart(3, "0")}`;
+        newdata.AssignmentId = assignmentId;
+        const data = await AssignmentModel.create(newdata);
+        res.json({ message: "Create Assignment", data: data });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+};
 
 const updateassignment = async (req, res) => {
     const id = req.params.id;
