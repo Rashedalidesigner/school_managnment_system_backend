@@ -13,6 +13,7 @@ const User = new mongoose.Schema({
     },
     usertype: {
         type: String,
+        default: "Student",
         required: true,
     },
     useremail: {

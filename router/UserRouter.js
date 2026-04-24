@@ -9,5 +9,7 @@ userRouter.post("/add", UserController.createUser);
 userRouter.delete("/delete/:id", UserController.deleteUser);
 userRouter.put("/update/:id", UserController.updateUser);
 userRouter.get("/:id", UserController.getuserbyid);
+userRouter.post("/login", UserController.loginUser);
+userRouter.post("/register", UserController.createUser);
 
 export default userRouter;

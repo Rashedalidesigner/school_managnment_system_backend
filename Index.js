@@ -13,7 +13,8 @@ import studentLeaveRouter from "./router/studentLeaveRouter.js";
 import teacherAttendenceRouter from "./router/teacherattendenceRouter.js";
 import teacherLeaveRouter from "./router/teacherLeaveRouter.js";
 import FeeRouter from "./router/FeeRouter.js";
-
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const PORT = 5000;
@@ -32,13 +33,7 @@ app.use("/api/teacherattendence", teacherAttendenceRouter);
 app.use("/api/teacherLeave", teacherLeaveRouter);
 app.use("/api/fee", FeeRouter);
 
-// import ClassSchema from "./model/ClassSchama.js";
 
-// connectDB().then(async () => {
-//     await ClassSchema.collection.dropIndex("classId_1");
-//     console.log("Dropped unique index on StudentId");
-//     // process.exit();
-// });
 connectDB().then(async () => {
     connectDB();
     // console.log("Connected to MongoDB");

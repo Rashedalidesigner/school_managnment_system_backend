@@ -1,4 +1,5 @@
-
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import UserModel from "../model/User.js";
 import { getNextSequence } from "./counter.js";
 
@@ -11,9 +12,11 @@ const createUser = async (req, res) => {
         return res.json({ message: "user already exits" });
     } else {
         try {
+            const hashPassword = await bcrypt.hash(req.body.password, 10);
             const seq = await getNextSequence("USER");
             const userId = `U-${String(seq).padStart(3, "0")}`;
             newdata.userId = userId;
+            newdata.password = hashPassword;
             const data = await UserModel.create(newdata);
             res.json({ message: "Create User", data: data });
         } catch (error) {
@@ -51,4 +54,34 @@ const getuserbyid = async (req, res) => {
     await res.json({ message: "get single user", data: data });
 };
 
-export default { getUser, updateUser, deleteUser, getuserbyid, createUser };
+const loginUser = async (req, res) => {
+    try {
+        const { useremail, password } = req.body;
+
+        const user = await UserModel.findOne({ useremail });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid Email" });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: "Wrong Password" });
+        }
+
+        const token = jwt.sign(
+            { id: user._id, usertype: user.usertype },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
+        res.json({
+            message: "Login Success",
+            token,
+            user,
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export default { getUser, updateUser, loginUser, deleteUser, getuserbyid, createUser };
