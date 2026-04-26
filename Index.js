@@ -33,6 +33,10 @@ app.use("/api/teacherattendence", teacherAttendenceRouter);
 app.use("/api/teacherLeave", teacherLeaveRouter);
 app.use("/api/fee", FeeRouter);
 
+app.get("/", (req, res) => {
+    res.send("Welcome to the School Management System API");
+});
+
 
 connectDB().then(async () => {
     connectDB();
