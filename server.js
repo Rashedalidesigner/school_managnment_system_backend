@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import connectDB from "./connection/connection.js";
+// import connectDB from "./connection/connection.js";
 import Studentrouter from "./router/StudentRouter.js";
 import userRouter from "./router/UserRouter.js";
 import teacherRouter from "./router/teacherRouter.js";
@@ -14,6 +14,9 @@ import teacherAttendenceRouter from "./router/teacherattendenceRouter.js";
 import teacherLeaveRouter from "./router/teacherLeaveRouter.js";
 import FeeRouter from "./router/FeeRouter.js";
 import dotenv from "dotenv";
+// import connection from "./connection/connected.js";
+import { mongodbConnection } from "./config/MongoDb.js";
+
 dotenv.config();
 
 const app = express();
@@ -37,16 +40,12 @@ app.get("/", (req, res) => {
     res.send("Welcome to the School Management System API");
 });
 
+mongodbConnection();
 
-connectDB().then(async () => {
-    connectDB();
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-    });
-}).catch((error) => {
-    console.error("Error connecting to MongoDB:", error);
-    process.exit(1);
+app.listen(PORT, () => {
+    console.log(`server is running on port ${PORT}`)
 });
+
 
 
 
